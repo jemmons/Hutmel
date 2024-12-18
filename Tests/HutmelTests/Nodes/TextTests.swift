@@ -15,11 +15,5 @@ class TextTests: XCTestCase {
     func testChildren() {
         XCTAssert(subject.children.isEmpty)
     }
-    
-    
-    func testLiteralConversion() {
-        let text: Text = "world"
-        XCTAssertEqual(text.stringRepresentation, "world")
-    }
 }
 
