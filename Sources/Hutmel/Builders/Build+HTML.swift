@@ -1,8 +1,26 @@
-public enum Build {
-    public static func html(@HTMLBuilder content: (Tag.Type) -> [any Node]) -> String {
-        content(Tag.self).map { $0.stringRepresentation }.joined(separator: "")
+import Algorithms
+
+
+
+public extension Build {
+    static func html(attributes: [String: String?] = [:], @HTMLBuilder body: (Tag.Type) -> [any Node]) -> String {
+        return Tag(
+            "html",
+            attributes: attributes,
+            children: body(Tag.self),
+            lines: true
+        ).stringRepresentation
     }
-    public static func html(@HTMLBuilder content: () -> [any Node]) -> String {
-        content().map { $0.stringRepresentation }.joined(separator: "")
+    
+    
+    static func html(attributes: [String: String?] = [:], @HTMLBuilder body: () -> [any Node]) -> String {
+        return Tag(
+            "html",
+            attributes: attributes,
+            children: body(),
+            lines: true
+        ).stringRepresentation
     }
 }
+
+

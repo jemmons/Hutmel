@@ -11,11 +11,14 @@ let package = Package(
       targets: ["Hutmel"]),
   ],
   dependencies: [
+    .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
   ],
   targets: [
     .target(
       name: "Hutmel",
-      dependencies: []),
+      dependencies: [
+        .product(name: "Algorithms", package: "swift-algorithms"),
+      ]),
     .testTarget(
       name: "HutmelTests",
       dependencies: ["Hutmel"]),

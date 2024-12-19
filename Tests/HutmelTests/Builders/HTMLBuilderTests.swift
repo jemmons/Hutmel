@@ -5,7 +5,7 @@ import Hutmel
 
 class HTMLBuilderTests: XCTestCase {
     func testNodeExpressions() {
-        let subject = Build.html {
+        let subject = Build.fragment {
             Tag("h1", children: [Text("Hello:")])
             CR()
             Tag("p", children: [Text("Hello…")])
@@ -15,7 +15,7 @@ class HTMLBuilderTests: XCTestCase {
     
     
     func testStringExpressions() {
-        let subject = Build.html {
+        let subject = Build.fragment {
             Tag("p")
             "thing"
         }
@@ -24,7 +24,7 @@ class HTMLBuilderTests: XCTestCase {
     
     
     func testNestedExpressions() {
-        let subject = Build.html {
+        let subject = Build.fragment {
             Tag("p") {
                 "Hello "
                 Tag("i") {
@@ -37,13 +37,40 @@ class HTMLBuilderTests: XCTestCase {
     
     
     func testConvenienceNodes() {
-        let subject = Build.html { tag in
-            tag.p() {
+        let subject = Build.fragment { tag in
+            tag.p {
                 "hello "
-                tag.b() { "world!" }
+                tag.b { "world!" }
             }
         }
         XCTAssertEqual(subject, "<p>hello <b>world!</b></p>")
-
+    }
+    
+    
+    func testDocument() {
+        let subject = Build.html { t in
+            t.head {
+                t.title("My Page")
+            }
+            t.body {
+                t.h1 { "Welcome!" }
+                t.p {
+                    "You may enjoy "
+                    t.a(href: "http://example.com") { "this" }
+                    "."
+                }
+            }
+        }
+        XCTAssertEqual(subject, """
+        <html>
+        <head>
+        <title>My Page</title>
+        </head>
+        <body>
+        <h1>Welcome!</h1>
+        <p>You may enjoy <a href="http://example.com">this</a>.</p>
+        </body>
+        </html>
+        """)
     }
 }
