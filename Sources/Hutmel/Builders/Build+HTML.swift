@@ -3,23 +3,13 @@ import Algorithms
 
 
 public extension Build {
-    static func html(attributes: [String: String?] = [:], @HTMLBuilder body: (Tag.Type) -> [any Node]) -> String {
+    static func html(attributes: [String: String?] = [:], @HTMLBuilder body: () -> Fragment) -> Tag {
         return Tag(
             "html",
             attributes: attributes,
-            children: body(Tag.self),
+            children: body().children,
             lines: true
-        ).stringRepresentation
-    }
-    
-    
-    static func html(attributes: [String: String?] = [:], @HTMLBuilder body: () -> [any Node]) -> String {
-        return Tag(
-            "html",
-            attributes: attributes,
-            children: body(),
-            lines: true
-        ).stringRepresentation
+        )
     }
 }
 

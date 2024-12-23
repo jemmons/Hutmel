@@ -10,7 +10,7 @@ class HTMLBuilderTests: XCTestCase {
             CR()
             Tag("p", children: [Text("Hello…")])
         }
-        XCTAssertEqual(subject, "<h1>Hello:</h1>\n<p>Hello…</p>")
+        XCTAssertEqual(subject.stringRepresentation, "<h1>Hello:</h1>\n<p>Hello…</p>")
     }
     
     
@@ -19,7 +19,7 @@ class HTMLBuilderTests: XCTestCase {
             Tag("p")
             "thing"
         }
-        XCTAssertEqual(subject, "<p></p>thing")
+        XCTAssertEqual(subject.stringRepresentation, "<p></p>thing")
     }
     
     
@@ -32,36 +32,36 @@ class HTMLBuilderTests: XCTestCase {
                 }
             }
         }
-        XCTAssertEqual(subject, "<p>Hello <i>World!</i></p>")
+        XCTAssertEqual(subject.stringRepresentation, "<p>Hello <i>World!</i></p>")
     }
     
     
     func testConvenienceNodes() {
-        let subject = Build.fragment { tag in
-            tag.p {
+        let subject = Build.fragment {
+            Tag.p {
                 "hello "
-                tag.b { "world!" }
+                Tag.b { "world!" }
             }
         }
-        XCTAssertEqual(subject, "<p>hello <b>world!</b></p>")
+        XCTAssertEqual(subject.stringRepresentation, "<p>hello <b>world!</b></p>")
     }
     
     
     func testDocument() {
-        let subject = Build.html { t in
-            t.head {
-                t.title("My Page")
+        let subject = Build.html {
+            Tag.head {
+                Tag.title { "My Page" } 
             }
-            t.body {
-                t.h1 { "Welcome!" }
-                t.p {
+            Tag.body {
+                Tag.h1 { "Welcome!" }
+                Tag.p {
                     "You may enjoy "
-                    t.a(href: "http://example.com") { "this" }
+                    Tag.a(href: "http://example.com") { "this" }
                     "."
                 }
             }
         }
-        XCTAssertEqual(subject, """
+        XCTAssertEqual(subject.stringRepresentation, """
         <html>
         <head>
         <title>My Page</title>
@@ -72,5 +72,43 @@ class HTMLBuilderTests: XCTestCase {
         </body>
         </html>
         """)
+    }
+    
+    
+    func testOptional() {
+        var showTitle = true
+        @HTMLBuilder var build: Fragment {
+            if showTitle {
+                Tag.h1 { "TITLE" }
+            }
+            Tag.p { "hello" }
+        }
+        
+        let trueSubject = build.stringRepresentation
+        showTitle = false
+        let falseSubject = build.stringRepresentation
+        
+        XCTAssertEqual(trueSubject, "<h1>TITLE</h1><p>hello</p>")
+        XCTAssertEqual(falseSubject, "<p>hello</p>")
+    }
+    
+    
+    func testConditional() {
+        var name: String?
+        @HTMLBuilder var build: Fragment {
+            if let someName = name {
+                Tag.p { someName }
+            } else {
+                Tag.p { "you" }
+            }
+        }
+        
+        let trueSubject = build.stringRepresentation
+        name = "Josh"
+        let falseSubject = build.stringRepresentation
+        
+        XCTAssertEqual(trueSubject, "<p>you</p>")
+        XCTAssertEqual(falseSubject, "<p>Josh</p>")
+
     }
 }

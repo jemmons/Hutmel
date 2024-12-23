@@ -22,51 +22,6 @@ public struct Tag: Node {
 
 
 
-public extension Tag {
-    static func a(href: String, attributes: [String: String?] = [:], @HTMLBuilder builder: () -> [any Node] = {[]}) -> Tag {
-        var attr = attributes
-        attr["href"] = href
-        return Tag("a", attributes: attr, children: builder())
-    }
-    
-    
-    static func p(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> [any Node] = {[]}) -> Tag {
-        return Tag("p", attributes: attributes, children: builder())
-    }
-    
-    
-    static func b(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> [any Node] = {[]}) -> Tag {
-        return Tag("b", attributes: attributes, children: builder())
-    }
-    
-    
-    static func h1(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> [any Node] = {[]}) -> Tag {
-        return Tag("h1", attributes: attributes, children: builder())
-    }
-
-    
-    static func h2(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> [any Node] = {[]}) -> Tag {
-        return Tag("h2", attributes: attributes, children: builder())
-    }
-
-    
-    static func head(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> [any Node] = {[]}) -> Tag {
-        return Tag("head", attributes: attributes, children: builder(), lines: true)
-    }
-    
-    
-    static func body(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> [any Node] = {[]}) -> Tag {
-        return Tag("body", attributes: attributes, children: builder(), lines: true)
-    }
-
-
-    static func title(_ content: String) -> Tag {
-        return Tag("title", children: [Text(content)])
-    }
-}
-
-
-
 private enum Helper {
     static func makeOpenTag(name: String, attributes: [String: String?]) -> String {
         var comps: [String] = [name]
