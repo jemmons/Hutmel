@@ -28,4 +28,8 @@ public struct HTMLBuilder {
     public static func buildExpression(_ expression: String) -> Text {
         Text(expression)
     }
+    
+    public static func buildArray(_ components: [any Node]) -> Fragment {
+        Fragment(components)
+    }
 }

@@ -2,7 +2,7 @@ public extension Tag {
     init(_ name: String, attributes: [String: String?] = [:], lines: Bool = false, @HTMLBuilder builder: () -> Fragment) {
         self.init(name, attributes: attributes, children: builder().children, lines: lines)
     }
-
+    
     
     static func a(href: String, attributes: [String: String?] = [:], @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
         var attr = attributes
@@ -43,5 +43,15 @@ public extension Tag {
     
     static func title(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
         return Tag("title", children: builder().children)
+    }
+    
+    
+    static func ul(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
+        return Tag("ul", children: builder().children)
+    }
+    
+    
+    static func li(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
+        return Tag("li", children: builder().children)
     }
 }
