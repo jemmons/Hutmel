@@ -1,6 +1,6 @@
 public extension Tag {
     init(_ name: String, attributes: [String: String?] = [:], lines: Bool = false, @HTMLBuilder builder: () -> Fragment) {
-        self.init(name, attributes: attributes, children: builder().children, lines: lines)
+        self.init(name, attributes, children: builder().children, lines: lines)
     }
     
     

@@ -12,7 +12,7 @@ public struct Tag: Node {
     }
     
     
-    public init(_ name: String, attributes: [String: String?] = [:], children: [any Node] = [], lines: Bool = false) {
+    public init(_ name: String, _ attributes: [String: String?] = [:], children: [any Node] = [], lines: Bool = false) {
         self.name = name
         self.attributes = attributes
         self.children = children

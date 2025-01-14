@@ -10,7 +10,7 @@ class TagTests: XCTestCase {
     }
     
     func testRendersAttributes() {
-        let subject = Tag("a", attributes: ["href": "http://example.com", "target": "_blank"])
+        let subject = Tag("a", ["href": "http://example.com", "target": "_blank"])
         XCTAssert(subject.stringRepresentation.hasPrefix("<a "))
         XCTAssert(subject.stringRepresentation.hasSuffix("></a>"))
         XCTAssert(subject.stringRepresentation.contains(" href=\"http://example.com\""))
@@ -18,7 +18,7 @@ class TagTests: XCTestCase {
     }
     
     func testNameOnlyAttributes() {
-        let subject = Tag("option", attributes: ["selected":nil, "value":"blue"])
+        let subject = Tag("option", ["selected":nil, "value":"blue"])
         XCTAssert(subject.stringRepresentation.hasPrefix("<option "))
         XCTAssert(subject.stringRepresentation.hasSuffix("></option>"))
         XCTAssert(subject.stringRepresentation.contains(" selected"))
