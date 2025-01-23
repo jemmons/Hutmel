@@ -8,6 +8,11 @@ public extension Tag {
     }
     
 
+    static func div(_ attributes: [String: String?] = [:], lines: Bool = true, @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
+        return Tag("div", attributes, lines: lines, builder: builder)
+    }
+    
+    
     static func a(href: URL, target: AnchorTarget? = nil, _ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
         return a(href: href.absoluteString, target: target, attributes, builder: builder)
     }

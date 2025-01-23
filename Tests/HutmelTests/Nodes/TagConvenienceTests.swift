@@ -55,3 +55,30 @@ struct imgTests {
         #expect(Tag.img(src: "example.png").stringRepresentation == #"<img src="example.png">"#)
     }
 }
+
+
+struct divTests {
+    @Test func lines() {
+        let subject = Tag.div() {
+            Tag.p { "Hello" }
+            "Bare"
+            Tag.p { "World" }
+        }
+        #expect(subject.stringRepresentation == """
+        <div>
+        <p>Hello</p>
+        Bare
+        <p>World</p>
+        </div>
+        """)
+    }
+
+    @Test func noLines() {
+        let subject = Tag.div(lines: false) {
+            Tag.p { "Hello" }
+            "Bare"
+            Tag.p { "World" }
+        }
+        #expect(subject.stringRepresentation == "<div><p>Hello</p>Bare<p>World</p></div>")
+    }
+}
