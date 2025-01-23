@@ -98,6 +98,10 @@ struct ScriptTests {
     
     @Test func hasBody() {
         let subject = Tag.script { "console.log('foo');" }
-        #expect(subject.stringRepresentation == "<script>console.log('foo');</script>")
+        #expect(subject.stringRepresentation == """
+        <script>
+        console.log('foo');
+        </script>
+        """)
     }
 }

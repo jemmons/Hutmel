@@ -39,9 +39,9 @@ private enum Helper {
 
     
     static func makeInner(children: [any Node], childPerLine: Bool) -> String {
-        let seperator = childPerLine ? "\n" : ""
+        let seperator = (!children.isEmpty && childPerLine) ? "\n" : ""
         var childrenBuf = seperator
-        childrenBuf += children.map { $0.stringRepresentation }.joined(separator: seperator)
+        childrenBuf += children.map(\.stringRepresentation).joined(separator: seperator)
         childrenBuf += seperator
         return childrenBuf
     }

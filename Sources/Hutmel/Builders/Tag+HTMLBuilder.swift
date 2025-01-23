@@ -69,7 +69,7 @@ public extension Tag {
             attr["src"] = someSRC
         }
         attr.merge(attributes) { $1 }
-        return Tag("script", attr, builder: builder )
+        return Tag("script", attr, lines: true, builder: builder )
     }
     
     
