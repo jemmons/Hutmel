@@ -1,41 +1,49 @@
-import XCTest
+import Testing
 import Hutmel
 
 
-
-class TagTests: XCTestCase {
-    func testRendersName() {
+struct TagTests {
+    @Test func rendersName() {
         let subject = Tag("name")
-        XCTAssertEqual(subject.stringRepresentation, "<name></name>")
+        #expect(subject.stringRepresentation == "<name></name>")
     }
     
-    func testRendersAttributes() {
+    
+    @Test func rendersVoidElement() {
+        let subject = Tag("name", children: nil)
+        #expect(subject.stringRepresentation == "<name>")
+    }
+    
+    
+    @Test func rendersAttributes() {
         let subject = Tag("a", ["href": "http://example.com", "target": "_blank"])
-        XCTAssert(subject.stringRepresentation.hasPrefix("<a "))
-        XCTAssert(subject.stringRepresentation.hasSuffix("></a>"))
-        XCTAssert(subject.stringRepresentation.contains(" href=\"http://example.com\""))
-        XCTAssert(subject.stringRepresentation.contains(" target=\"_blank\""))
+        #expect(subject.stringRepresentation.hasPrefix("<a "))
+        #expect(subject.stringRepresentation.hasSuffix("></a>"))
+        #expect(subject.stringRepresentation.contains(" href=\"http://example.com\""))
+        #expect(subject.stringRepresentation.contains(" target=\"_blank\""))
     }
     
-    func testNameOnlyAttributes() {
+    
+    @Test func nameOnlyAttributes() {
         let subject = Tag("option", ["selected":nil, "value":"blue"])
-        XCTAssert(subject.stringRepresentation.hasPrefix("<option "))
-        XCTAssert(subject.stringRepresentation.hasSuffix("></option>"))
-        XCTAssert(subject.stringRepresentation.contains(" selected"))
-        XCTAssert(subject.stringRepresentation.contains(" value=\"blue\""))
+        #expect(subject.stringRepresentation.hasPrefix("<option "))
+        #expect(subject.stringRepresentation.hasSuffix("></option>"))
+        #expect(subject.stringRepresentation.contains(" selected"))
+        #expect(subject.stringRepresentation.contains(" value=\"blue\""))
     }
     
-    func testContent() {
-        let subject: Tag = Tag("p", children: [
+    
+    @Test func content() {
+        let subject = Tag("p", children: [
             CR(),
             Text("Hello "),
             Tag("b", children: [Text("World")]),
             CR(),
         ])
-        XCTAssertEqual(subject.stringRepresentation, """
-        <p>
-        Hello <b>World</b>
-        </p>
-        """)
+        #expect(subject.stringRepresentation == """
+    <p>
+    Hello <b>World</b>
+    </p>
+    """)
     }
 }

@@ -1,18 +1,23 @@
 public struct Tag: Node {
     private let name: String
     private let attributes: [String: String?]
-    public let children: [any Node]
+    public let children: [any Node]? // nil if void element
     public let childPerLine: Bool
 
     
     public var stringRepresentation: String {
-        Helper.makeOpenTag(name: name, attributes: attributes)
-        + Helper.makeInner(children: children, childPerLine: childPerLine)
-        + Helper.makeCloseTag(name: name)
+        var buf = Helper.makeOpenTag(name: name, attributes: attributes)
+        // `nil` children means this is a void element. No body AND no closing tag.
+        // `isEmpty` children means no body, but still gets a closing tag.
+        if let someChildren = children {
+            buf += Helper.makeInner(children: someChildren, childPerLine: childPerLine)
+            buf += Helper.makeCloseTag(name: name)
+        }
+        return buf
     }
     
     
-    public init(_ name: String, _ attributes: [String: String?] = [:], children: [any Node] = [], lines: Bool = false) {
+    public init(_ name: String, _ attributes: [String: String?] = [:], children: [any Node]? = [], lines: Bool = false) {
         self.name = name
         self.attributes = attributes
         self.children = children

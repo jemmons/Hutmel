@@ -1,19 +1,14 @@
-import XCTest
+import Testing
 import Hutmel
 
 
-
-class CRTests: XCTestCase {
-    let subject = CR()
-    
-    
-    func testString() {
-        XCTAssertEqual(subject.stringRepresentation, "\n")
+struct CRTests {
+    @Test func stringIsNewline() {
+        #expect(CR().stringRepresentation == "\n")
     }
     
     
-    func testChildren() {
-        XCTAssert(subject.children.isEmpty)
+    @Test func childrenIsNil() {
+        #expect(CR().children == nil)
     }
 }
-

@@ -1,19 +1,14 @@
-import XCTest
+import Testing
 import Hutmel
 
 
-
-class TextTests: XCTestCase {
-    let subject = Text("hello")
-    
-    
-    func testString() {
-        XCTAssertEqual(subject.stringRepresentation, "hello")
+struct TextTests {
+    @Test func hasString() {
+        #expect(Text("hello").stringRepresentation == "hello")
     }
     
     
-    func testChildren() {
-        XCTAssert(subject.children.isEmpty)
+    @Test func childrenIsNil() {
+        #expect(Text("hello").children == nil)
     }
 }
-

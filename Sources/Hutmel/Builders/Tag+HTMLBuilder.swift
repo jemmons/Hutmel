@@ -28,6 +28,16 @@ public extension Tag {
     }
     
     
+    static func br() -> Tag {
+        return Tag("br", children: nil)
+    }
+    
+    
+    static func hr(_ attributes: [String: String?] = [:]) -> Tag {
+        return Tag("hr", attributes, children: nil)
+    }
+    
+    
     static func b(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
         return Tag("b", attributes, builder: builder)
     }
@@ -55,6 +65,16 @@ public extension Tag {
         }
         attr.merge(attributes) { $1 }
         return Tag("script", attributes, builder: builder )
+    }
+    
+    
+    static func link(href: String, rel: [Relationship], _ attributes: [String: String?] = [:]) -> Tag {
+        var attr: [String: String?] = [
+            "href": href,
+            "rel": rel.map(\.description).joined(separator: " ")
+        ]
+        attr.merge(attributes) { $1 }
+        return Tag("link", attr, children: nil)
     }
     
     
@@ -89,6 +109,6 @@ public extension Tag {
         }
         attr.merge(attributes) { $1 }
         
-        return Tag("img", attr)
+        return Tag("img", attr, children: nil)
     }
 }
