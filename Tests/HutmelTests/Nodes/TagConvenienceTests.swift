@@ -7,7 +7,7 @@ struct linkTests {
         let subject = Hutmel.Tag.link(href: "example.com", rel: [.canonical])
         #expect(subject.stringRepresentation.hasPrefix("<link "))
         #expect(!subject.stringRepresentation.contains("</link>"))
-        #expect(!subject.stringRepresentation.hasSuffix("/>"))
+        #expect(!subject.stringRepresentation.contains("/>"))
         #expect(subject.stringRepresentation.contains(#"href="example.com""#))
         #expect(subject.stringRepresentation.contains(#"rel="canonical""#))
     }
@@ -24,6 +24,17 @@ struct linkTests {
     }
 }
 
+
+struct metaTests {
+    @Test func base() {
+        let subject = Tag.meta(name: "x-icon", content: "/ico.bmp")
+        #expect(subject.stringRepresentation.hasPrefix("<meta "))
+        #expect(!subject.stringRepresentation.contains("</meta>"))
+        #expect(!subject.stringRepresentation.contains("/>"))
+        #expect(subject.stringRepresentation.contains(#" name="x-icon""#))
+        #expect(subject.stringRepresentation.contains(#" content="/ico.bmp""#))
+    }
+}
 
 struct brTests {
     @Test func isVoidElement() {

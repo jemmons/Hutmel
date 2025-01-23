@@ -78,6 +78,11 @@ public extension Tag {
     }
     
     
+    static func meta(name: String, content: String) -> Tag {
+        return Tag("meta", ["name": name, "content": content], children: nil)
+    }
+    
+    
     static func body(_ attributes: [String: String?] = [:], @HTMLBuilder builder: () -> Fragment = { Fragment.empty }) -> Tag {
         return Tag("body", attributes, lines: true, builder: builder)
     }
