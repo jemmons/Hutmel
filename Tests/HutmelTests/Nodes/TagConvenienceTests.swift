@@ -2,7 +2,7 @@ import Testing
 import Hutmel
 
 
-struct linkTests {
+struct LinkTests {
     @Test func base() {
         let subject = Hutmel.Tag.link(href: "example.com", rel: [.canonical])
         #expect(subject.stringRepresentation.hasPrefix("<link "))
@@ -25,7 +25,7 @@ struct linkTests {
 }
 
 
-struct metaTests {
+struct MetaTests {
     @Test func base() {
         let subject = Tag.meta(name: "x-icon", content: "/ico.bmp")
         #expect(subject.stringRepresentation.hasPrefix("<meta "))
@@ -36,28 +36,28 @@ struct metaTests {
     }
 }
 
-struct brTests {
+struct BRTests {
     @Test func isVoidElement() {
         #expect(Tag.br().stringRepresentation == "<br>")
     }
 }
 
 
-struct hrTests {
+struct HRTests {
     @Test func isVoidElement() {
         #expect(Tag.hr().stringRepresentation == "<hr>")
     }
 }
 
 
-struct imgTests {
+struct ImgTests {
     @Test func isVoidElement() {
         #expect(Tag.img(src: "example.png").stringRepresentation == #"<img src="example.png">"#)
     }
 }
 
 
-struct divTests {
+struct DivTests {
     @Test func lines() {
         let subject = Tag.div() {
             Tag.p { "Hello" }
@@ -80,5 +80,24 @@ struct divTests {
             Tag.p { "World" }
         }
         #expect(subject.stringRepresentation == "<div><p>Hello</p>Bare<p>World</p></div>")
+    }
+}
+
+
+
+struct ScriptTests {
+    @Test func basic() {
+        let subject = Tag.script()
+        #expect(subject.stringRepresentation == "<script></script>")
+    }
+    
+    @Test func hasSrc() {
+        let subject = Tag.script(src: "file.js")
+        #expect(subject.stringRepresentation.contains(#" src="file.js""#))
+    }
+    
+    @Test func hasBody() {
+        let subject = Tag.script { "console.log('foo');" }
+        #expect(subject.stringRepresentation == "<script>console.log('foo');</script>")
     }
 }
